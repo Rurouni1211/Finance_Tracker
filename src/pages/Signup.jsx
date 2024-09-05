@@ -1,13 +1,16 @@
 import { useState } from "react"
+import { useSignup } from "../hooks/useSignup"
 
 export default function Signup(){
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [displayName, setDisplayName] = useState('')
 
+    const { signup, isPending, error } = useSignup()
+
     const handleSubmit = (e) =>{
         e.preventDefault()
-        console.log (email,password, displayName)
+        signup(email,password, displayName)
     }
     return (
         <form className="max-w-md mx-auto bg-white p-8 shadow-lg rounded-md" onSubmit={handleSubmit}>
@@ -36,7 +39,9 @@ export default function Signup(){
                 onChange={e=> setDisplayName(e.target.value)}
                 value={displayName}/>
             </label>
-            <button className="w-full bg-indigo-600 text-white p-2 rounded-md hover:bg-indigo-700">Sign Up</button>
+            {!isPending && <button className="w-full bg-indigo-600 text-white p-2 rounded-md hover:bg-indigo-700">Sign Up</button>}
+            {isPending && <button className="w-full bg-indigo-600 text-white p-2 rounded-md hover:bg-indigo-700" disabled>Loading...</button>}
+            {error && <p>{error}</p>}
         </form>
     )
 }
