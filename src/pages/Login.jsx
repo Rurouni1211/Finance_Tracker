@@ -1,12 +1,14 @@
 import { useState } from "react"
+import { useLogin } from "../hooks/useLogin"
 
 export default function Login(){
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const {login, error, isPending} = useLogin()
 
     const handleSubmit = (e) =>{
         e.preventDefault()
-        console.log (email,password)
+        login (email,password)
     }
     return (
         <form className="max-w-md mx-auto bg-white p-8 shadow-lg rounded-md" onSubmit={handleSubmit}>
@@ -27,7 +29,10 @@ export default function Login(){
                 onChange={e=> setPassword(e.target.value)}
                 value={password}/>
             </label>
-            <button className="w-full bg-indigo-600 text-white p-2 rounded-md hover:bg-indigo-700">Login</button>
+            
+            {!isPending && <button className="w-full bg-indigo-600 text-white p-2 rounded-md hover:bg-indigo-700">Login</button>}
+            {isPending && <button className="w-full bg-indigo-600 text-white p-2 rounded-md hover:bg-indigo-700">loading</button>}
+            {error && <p>{error}</p>}
         </form>
     )
 }

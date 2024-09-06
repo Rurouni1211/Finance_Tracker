@@ -1,21 +1,21 @@
-import { useEffect, useState } from "react"
-import { useAuthContext } from "./useAuthContext"
-import { projectAuth } from "../firebase/config"
+import { signInWithEmailAndPassword } from "firebase/auth/cordova";
+import { projectAuth } from "../firebase/config";
+import { useState, useEffect } from "react";
+import { useAuthContext } from "./useAuthContext";
 
-
-export const useLogout = () => {
+export const useLogin = () => {
     const [isCancelled, setIsCancelled] = useState(false)
     const [error, setError] = useState(null)
     const [isPending, setIsPending] = useState(false)
     const {dispatch } = useAuthContext(); 
 
-    const logout = async () => {
+    const login = async (email, password) => {
         setError(null)
         setIsPending(true)
 
         try {
-            await projectAuth.signOut()
-            dispatch({type:'LOGOUT'})
+            const res = await signInWithEmailAndPassword(projectAuth, email, password)
+            dispatch({type:'LOGIN', payload: res.user})
 
             if(!isCancelled){
                 setIsPending(false)
@@ -33,7 +33,8 @@ export const useLogout = () => {
     }
 
     useEffect(()=> {
+        setIsCancelled(false); 
         return () => setIsCancelled(true)
     }, [])
-    return{logout, error, isPending}
+    return{login, error, isPending}
 }
