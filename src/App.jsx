@@ -7,20 +7,27 @@ import Login from "./pages/Login"
 import Signup from "./pages/Signup"
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Navbar from './components/Navbar'
+import Layout from './components/Layout'
 
 const router = createBrowserRouter([
   
     {
-      path: "/", 
-      element: <Home/>,
-    },
-    {
-      path: "/login", 
-      element: <Login/>,
-    },
-    {
-      path: "/signup", 
-      element: <Signup/>,
+      path: '/',
+    element: <Layout />, // Layout that includes Navbar
+    children: [
+      {
+        path: '/',
+        element: <Home />
+      },
+      {
+        path: 'login',
+        element: <Login />
+      },
+      {
+        path: 'signup',
+        element: <Signup />
+      }
+    ]
     }
   
 ])
@@ -28,10 +35,7 @@ const router = createBrowserRouter([
 function App() {
   
   return (
-    <>
-      <Navbar/>
-      <RouterProvider router={router}/>
-    </>
+    <RouterProvider router={router} />
   
   )
 }
