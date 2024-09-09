@@ -6,12 +6,12 @@ import { getFirestore, Timestamp } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDroazdkwwQcbEWQ2dCodk5IldUXC9i9lU",
-  authDomain: "financetracker-3fc26.firebaseapp.com",
-  projectId: "financetracker-3fc26",
-  storageBucket: "financetracker-3fc26.appspot.com",
-  messagingSenderId: "523963136705",
-  appId: "1:523963136705:web:9db6ebe09b9994f843b240",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
 //init firebase
