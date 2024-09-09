@@ -5,10 +5,11 @@ import TransactionList from "./TransactionList";
 
 export default function Home() {
     const { user } = useAuthContext();
-    const { documents = null, error = null } = useCollection('transactions'); // Ensure destructuring doesn't fail
+    const { documents, error } = useCollection('transactions', ['uid', '==', user.uid], ["createdAt", "desc"]);
+
   
     return (
-      <div className="flex-row xl:flex xl:space-x-80">
+      <div className="flex-row pt-24 xl:flex xl:space-x-80">
         <div className="flex-1 p-10">
             <h3>Transaction List</h3>
         <div>
