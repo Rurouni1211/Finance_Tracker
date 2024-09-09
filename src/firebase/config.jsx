@@ -2,7 +2,7 @@ import firebase from "firebase/compat/app";
 import "firebase/firestore";
 import "firebase/auth";
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, Timestamp } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
@@ -22,4 +22,7 @@ const app = initializeApp(firebaseConfig);
 const projectFirestore = getFirestore(app);
 const projectAuth = getAuth(app);
 
-export { projectFirestore, projectAuth };
+
+const timestamp = Timestamp
+
+export { projectFirestore, projectAuth, timestamp };
