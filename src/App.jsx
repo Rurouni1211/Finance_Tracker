@@ -5,11 +5,16 @@ import './App.css'
 import Home from "./pages/Home"
 import Login from "./pages/Login"
 import Signup from "./pages/Signup"
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider, redirect, Navigate } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Layout from './components/Layout'
+import { useAuthContext } from './hooks/useAuthContext'
 
-const router = createBrowserRouter([
+
+
+function App() {
+  const {authIsReady, user} = useAuthContext()
+  const router = createBrowserRouter([
   
     {
       path: '/',
@@ -17,25 +22,29 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Home />
+        element: user ? <Home /> : <Navigate to="/login" />,
       },
       {
         path: 'login',
-        element: <Login />
+        element: user ? <Navigate to ="/"/> : <Login />
       },
       {
         path: 'signup',
-        element: <Signup />
+        element: user ? <Navigate to ="/"/> : <Signup />
       }
     ]
     }
   
 ])
-
-function App() {
-  
   return (
-    <RouterProvider router={router} />
+    <>
+    {authIsReady && (
+      <RouterProvider router={router} />
+    )}
+    </>
+    
+    
+    
   
   )
 }
